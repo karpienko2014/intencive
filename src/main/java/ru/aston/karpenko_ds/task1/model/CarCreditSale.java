@@ -39,9 +39,7 @@ public class CarCreditSale extends CarSale {
 
     private BigDecimal calculateMonthlyPayment() {
         BigDecimal monthlyInterestRate =
-                (credit.getAnnualInterestRate()
-                        .divide(BigDecimal.valueOf(100))
-                )
+                (credit.getAnnualInterestRate().divide(BigDecimal.valueOf(100)))
                         .divide(BigDecimal.valueOf(12));
         return getPrice()
                 .multiply(

@@ -1,14 +1,15 @@
 package ru.aston.karpenko_ds.task1.model;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public abstract class CarSale {
 
     private String model;
-    private double price;
+    private BigDecimal price;
     private Client client;
 
-    public CarSale(String model, double price, Client client) {
+    public CarSale(String model, BigDecimal price, Client client) {
         this.model = model;
         this.price = price;
         this.client = client;
@@ -18,7 +19,7 @@ public abstract class CarSale {
         return model;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
@@ -26,16 +27,16 @@ public abstract class CarSale {
         return client;
     }
 
-    public abstract double discountCalculation();
+    public abstract BigDecimal discountCalculation();
 
-    public abstract double getDiscountedPrice();
+    public abstract BigDecimal getDiscountedPrice();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CarSale)) return false;
         CarSale carSale = (CarSale) o;
-        return Double.compare(carSale.price, price) == 0 && model.equals(carSale.model) && client.equals(carSale.client);
+        return model.equals(carSale.model) && price.equals(carSale.price) && client.equals(carSale.client);
     }
 
     @Override

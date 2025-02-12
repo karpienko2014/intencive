@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.aston.karpenko_ds.task1.model.*;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,15 +17,15 @@ class SalesServiceTest {
     @BeforeEach
     void setUp() {
         Client johnMitchell = new Client("John", "Mitchell", 38);
-        Credit johnMitchellCredit = new Credit(48, 15);
-        CarSale johnMitchellSale = new CarCreditSale("Ford Mondeo", 12_500, johnMitchellCredit, johnMitchell);
+        Credit johnMitchellCredit = new Credit(48, BigDecimal.valueOf(15));
+        CarSale johnMitchellSale = new CarCreditSale("Ford Mondeo", BigDecimal.valueOf(12_500), johnMitchellCredit, johnMitchell);
 
         Client nickSantens = new Client("Nick", "Santens", 27);
-        CarSale nickSantensSale = new CarFullPaymentSale("BMW F10", 17_800, nickSantens);
+        CarSale nickSantensSale = new CarFullPaymentSale("BMW F10", BigDecimal.valueOf(17_800), nickSantens);
 
         Client thomasPayne = new Client("Thomas", "Payne", 44);
-        Credit thomasPayneCredit = new Credit(36, 7.5);
-        CarSale thomasPayneSale = new CarCreditSale("Chrysler 200", 22_450, thomasPayneCredit, thomasPayne);
+        Credit thomasPayneCredit = new Credit(36, BigDecimal.valueOf(7.5));
+        CarSale thomasPayneSale = new CarCreditSale("Chrysler 200", BigDecimal.valueOf(22_450), thomasPayneCredit, thomasPayne);
 
         sales = new SalesService();
         sales.add(johnMitchellSale)
@@ -33,9 +35,9 @@ class SalesServiceTest {
 
     @Test
     void totalPrice() {
-        double totalPrice = sales.totalPrice(CarSale::getDiscountedPrice);
-        double expected = 51004.64;
-        assertEquals(expected, totalPrice);
+        BigDecimal totalPrice = sales.totalPrice(carSale -> carSale.getDiscountedPrice().doubleValue());
+        BigDecimal expected = BigDecimal.valueOf(51004.65);
+        assertEquals(expected, totalPrice.setScale(2, RoundingMode.HALF_UP));
     }
 
     @Test

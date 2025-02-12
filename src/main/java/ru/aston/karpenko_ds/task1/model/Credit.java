@@ -1,13 +1,14 @@
 package ru.aston.karpenko_ds.task1.model;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Credit {
 
     private int months;
-    private double annualInterestRate;
+    private BigDecimal annualInterestRate;
 
-    public Credit(int months, double annualInterestRate) {
+    public Credit(int months, BigDecimal annualInterestRate) {
         this.months = months;
         this.annualInterestRate = annualInterestRate;
     }
@@ -16,7 +17,7 @@ public class Credit {
         return months;
     }
 
-    public double getAnnualInterestRate() {
+    public BigDecimal getAnnualInterestRate() {
         return annualInterestRate;
     }
 
@@ -25,7 +26,7 @@ public class Credit {
         if (this == o) return true;
         if (!(o instanceof Credit)) return false;
         Credit credit = (Credit) o;
-        return months == credit.months && Double.compare(credit.annualInterestRate, annualInterestRate) == 0;
+        return months == credit.months && annualInterestRate.equals(credit.annualInterestRate);
     }
 
     @Override

@@ -24,7 +24,6 @@ class HashSetImplTest {
     void add() {
         boolean add = hashSet.add(sameElement);
         assertFalse(add);
-
         add = hashSet.add(addedElement);
         assertTrue(add);
         assertTrue(hashSet.contains(addedElement));
@@ -34,7 +33,6 @@ class HashSetImplTest {
     void remove() {
         boolean remove = hashSet.remove(missingElement);
         assertFalse(remove);
-
         remove = hashSet.remove(sameElement);
         assertTrue(remove);
     }
@@ -43,7 +41,6 @@ class HashSetImplTest {
     void contains() {
         boolean contains = hashSet.contains(missingElement);
         assertFalse(contains);
-
         contains = hashSet.contains(sameElement);
         assertTrue(contains);
     }

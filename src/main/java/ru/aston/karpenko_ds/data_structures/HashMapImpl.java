@@ -1,5 +1,7 @@
 package ru.aston.karpenko_ds.data_structures;
 
+import java.util.Objects;
+
 /**
  * Класс, представляющий реализацию HashMap.
  *
@@ -44,7 +46,7 @@ public class HashMapImpl<K, V> {
      * @param value значение, связанное с ключом
      */
     public void put(K key, V value) {
-        int index = getIndex(key);
+        int index = getIndex(key, table.length);
         Entry<K, V> newEntry = new Entry<>(key, value);
 
         if (table[index] == null) {
@@ -53,7 +55,7 @@ public class HashMapImpl<K, V> {
         } else {
             Entry<K, V> current = table[index];
             while (true) {
-                if (current.key.equals(key)) {
+                if (Objects.equals(current.key, key)) {
                     current.value = value; // Обновляем значение если ключ уже существует
                     return;
                 }
@@ -76,11 +78,11 @@ public class HashMapImpl<K, V> {
      * @return значение по указанному ключу или null если ключ не найден
      */
     public V get(K key) {
-        int index = getIndex(key);
+        int index = getIndex(key, table.length);
         Entry<K, V> current = table[index];
 
         while (current != null) {
-            if (current.key.equals(key)) {
+            if (Objects.equals(current.key, key)) {
                 return current.value; // Возвращаем значение если ключ найден
             }
             current = current.next;
@@ -96,12 +98,12 @@ public class HashMapImpl<K, V> {
      * @return значение удаленного элемента или null если элемент не найден
      */
     public V remove(K key) {
-        int index = getIndex(key);
+        int index = getIndex(key, table.length);
         Entry<K, V> current = table[index];
         Entry<K, V> previous = null;
 
         while (current != null) {
-            if (current.key.equals(key)) {
+            if (Objects.equals(current.key, key)) {
                 if (previous == null) { // Удаляем первый элемент в списке
                     table[index] = current.next;
                 } else { // Удаляем элемент из середины или конца списка
@@ -130,10 +132,11 @@ public class HashMapImpl<K, V> {
      * Вычисляет индекс для хранения элемента на основе его хэш-кода.
      *
      * @param key ключ для вычисления индекса
+     * @param length длина массива
      * @return индекс в массиве для хранения элемента
      */
-    private int getIndex(K key) {
-        return Math.abs(key.hashCode()) % table.length; // Используем модуль хэш-кода для получения индекса
+    private int getIndex(K key, int length) {
+        return Math.abs(Objects.hashCode(key)) % length; // Используем модуль хэш-кода для получения индекса
     }
 
     /**
@@ -146,7 +149,7 @@ public class HashMapImpl<K, V> {
 
             for (Entry<K, V> entry : table) {
                 while (entry != null) {
-                    int index = Math.abs(entry.key.hashCode()) % newCapacity;
+                    int index = getIndex(entry.key, newCapacity);
 
                     Entry<K, V> nextEntry = entry.next; // Сохраняем ссылку на следующий элемент
 

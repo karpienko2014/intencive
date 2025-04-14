@@ -11,6 +11,7 @@ class HashMapImplTest {
     String demi = "Demi";
     Integer demiAge = 18;
     String michael = "Michael";
+    Integer sizeBeforePut;
 
     @BeforeEach
     void setUp() {
@@ -22,9 +23,17 @@ class HashMapImplTest {
     @Test
     void put() {
         Integer age = 26;
-        Integer sizeBeforePut = hashMap.size();
+        sizeBeforePut = hashMap.size();
         hashMap.put(michael, age);
         assertEquals(age, hashMap.get(michael));
+        assertEquals(++sizeBeforePut, hashMap.size());
+    }
+
+    @Test
+    void putNullKeyValue() {
+        sizeBeforePut = hashMap.size();
+        hashMap.put(null, null);
+        assertNull(hashMap.get(null));
         assertEquals(++sizeBeforePut, hashMap.size());
     }
 

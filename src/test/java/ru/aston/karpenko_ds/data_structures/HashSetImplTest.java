@@ -30,6 +30,14 @@ class HashSetImplTest {
     }
 
     @Test
+    void addNull() {
+        Integer sizeBeforeAddNull = hashSet.size();
+        boolean nullAdded = hashSet.add(null);
+        assertTrue(nullAdded);
+        assertEquals(++sizeBeforeAddNull, hashSet.size());
+    }
+
+    @Test
     void remove() {
         boolean remove = hashSet.remove(missingElement);
         assertFalse(remove);
